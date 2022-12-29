@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap'); </style>
+    <link rel="stylesheet" href="Miami.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="title"></div>
+    <h1>Things to do in </h1>
+    <h1 id="place"> Miami</h1>
+    <h1 id="blinker">|</h1>
+
+    <div id="map">
+        
+    </div>
+
+<div id="textFieldsFilters">
+    <input type="text" placeholder="Type your location" id="autocomplete">
+    <button id="submit">Submit</button>
+<br>
+    <input type="text" placeholder="Click a red marker" id="destination">
+    <button id="routeButton">Route</button>
+
+    <div id="filters">
+        <ul id="filtersList">
+            <li><button>NightClubs</button></li>
+            <li><button>Bars</button></li>
+            <li><button>Local Resturants</button></li>
+        </ul>
+    </div>
+</div>
+
+
+    <div id="placeDetails">
+    <div id="gallery">
+
+    </div>
+
+
+    <div id="placeInfo">
+
+    </div>
+</div>
+
+    <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA23WN2QCrfb64ytxvt_n5ZryLm_NIidU4&callback=initMap&v=beta&libraries=marker,places">
+</script>
+    <script src="Miami.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/place/details/json?
+                            fields=formatted_address,name,opening_hours,price_level,user_ratings_total,reviews,formatted_phone_number,website
+                            ,reviews_no_translations=true,rating"></script>
+    <script async defer src='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=25.7617,-80.1918&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY'></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+h1 {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 0;
+}
+#place {
+    display: inline-block;
+    white-space: nowrap;
+    margin-top: 0;
+}
+#blinker {
+    display: inline-block;
+    white-space: nowrap;
+    animation: blink 1s step-start infinite;
+    margin-top: 0;
+}
+@keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+#title {
+    white-space: nowrap;
+}
+ul {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+li {
+    list-style-type: none;
+    padding-left: 0.5rem;
+    margin: 0;
+}
+button {
+    border: 1.5px solid black;
+}
+button:hover {
+    background-color: white;
+}
+.selected {
+    margin: 0;
+    padding: 0;
+    border: 1.5px solid #8BB1F0;
+}
+input {
+    margin-left: 8px;
+    margin-top: 15px;
+    height: 20px;
+    width: 250px;
+}
+#textFieldsFilters {
+    margin-left: 1rem;
+    margin-right: 2rem;
+    position: absolute;
+    padding-right: 1rem;
+    top:14%;
+    left: 0;
+    background-color: #F3F3F3;
+    border-radius: 2%;
+}
+.textFields {
+    position: sticky;
+} 
+#submit {
+    margin-left: 0.2rem;
+    height: 1.5rem;
+}
+#routeButton {
+    margin-left: 0.2rem;
+    height: 1.5rem;
+}
+#map {
+    height: 100vh;
+    width: 100%;
+}
+#gallery {
+    height: 15rem;
+    width: 25rem;
+    display: flex;
+    justify-content: flex-start;
+}
+.galleryImg {
+    height: 18rem;
+    width: 25rem;
+    position: relative;
+    right: -1rem;
+    animation: fadeIn 0.5s;
+    border: 5px solid black;
+}
+.galleryImg2 {
+    margin-left: 2rem;
+    height: 18rem;
+    width: 25rem;
+    position: relative;
+    right: -1rem;
+    animation: fadeIn 0.5s;
+    border: 5px solid black;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+#infowindow-content {
+    display: none;
+  }
+  
+  #map #infowindow-content {
+    display: inline;
+  }
+  #placeDetails {
+    display: flex;
+    padding-top: 2rem;
+    background-image: linear-gradient(#9CC0F9 1%, 5%,#9CC0F0 7%,15%, #F3F3F3 90%);
+    height: 80vh;
+  }
+  #placeInfo {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 4rem;
+    width: 900px;
+    height: 200px;
+    position: absolute;
+    right: 0;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  /*for mobile*/
+  @media (max-width: 1850px) {
+    #placeDetails {
+        position: relative;
+    }
+    #placeInfo {
+        font-size: 0.9rem;
+        float: left;
+        position: absolute;
+        width: 95%;
+        background-color: #F3F3F3;
+        height: fit-content;
+        padding: 2px 2px 2px 2px;
+    }
+    #gallery {
+        opacity: 0.5;
+        display: grid;
+        grid-template-columns: fit-content;
+    }
+    .galleryImg2 {
+        margin-top: 1rem;
+    }
+  }
+  

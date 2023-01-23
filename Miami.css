@@ -1,11 +1,20 @@
-h1 {
+#title h1 {
     display: inline-block;
     font-family: 'Montserrat', sans-serif;
+    margin-top: 0;
+    color: #363636;
+    letter-spacing: 0.5rem;
+    font-size: 1.5rem;
+}
+body {
+    background-color: white;
+}
+p {
     margin-top: 0;
 }
 #place {
     display: inline-block;
-    white-space: nowrap;
+    overflow-wrap: break-word;
     margin-top: 0;
 }
 #blinker {
@@ -20,7 +29,9 @@ h1 {
     }
   }
 #title {
-    white-space: nowrap;
+    height: fit-content;
+    margin-left: 1rem;
+    overflow-wrap: break-word;
 }
 ul {
     display: flex;
@@ -32,17 +43,7 @@ li {
     padding-left: 0.5rem;
     margin: 0;
 }
-button {
-    border: 1.5px solid black;
-}
-button:hover {
-    background-color: white;
-}
-.selected {
-    margin: 0;
-    padding: 0;
-    border: 1.5px solid #8BB1F0;
-}
+
 input {
     margin-left: 8px;
     margin-top: 15px;
@@ -52,12 +53,61 @@ input {
 #textFieldsFilters {
     margin-left: 1rem;
     margin-right: 2rem;
+    width: 30%;
     position: absolute;
+    padding-top: 1rem;
     padding-right: 1rem;
     top:14%;
     left: 0;
-    background-color: #F3F3F3;
+    background-color: whitesmoke;
     border-radius: 2%;
+    z-index: 1;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
+    display: flex;
+    flex-wrap: wrap;
+}
+#filters {
+    margin-left: 0.5rem;
+} 
+#autocomplete {
+    margin-left: 1rem;
+    margin-top: 0;
+    height: 2rem;
+    background-color: white;
+    border-radius: 0.4rem;
+    border: none;
+    font-size: 0.8rem;
+    color: whitesmoke;
+}
+#submit {
+    border-radius: 1rem;
+    border: none;
+}
+#destination {
+    margin-left: 1rem;
+    border: none;
+    background-color: white;
+    color: whitesmoke;
+}
+#routeButton {
+    border-radius: 1rem;
+    border: none;
+    position: relative;
+    left: 0.3rem;
+}
+.b {
+    border-radius: 1rem;
+    border: none;
+    text-align: center;
+    padding: 0.4rem 0.4rem;
+}
+button:hover {
+    background-color: #D1D1D1;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
+    transition: 300ms;
+}
+.selected {
+    transition: 300ms;
 }
 .textFields {
     position: sticky;
@@ -71,32 +121,83 @@ input {
     height: 1.5rem;
 }
 #map {
+    padding: 0;
+    margin: 0;
     height: 100vh;
     width: 100%;
+    z-index: 1;
 }
-#gallery {
-    height: 15rem;
-    width: 25rem;
-    display: flex;
-    justify-content: flex-start;
+.fa {
+    color: #FFDF50;
 }
-.galleryImg {
-    height: 18rem;
-    width: 25rem;
-    position: relative;
-    right: -1rem;
+.fa-thumbs-down {
+    color: red;
+}
+.fa-regular {
+    color: grey;
+}
+.fa-wine-glass {
+    color: purple;
+}
+.fa-utensils {
+    color: silver;
+}
+.fa-compact-disc {
+    color: black;
+}
+.fa-dollar-sign {
+    color: green;
+}
+.fa-location-arrow {
+    color: lightblue;
+}
+.dropdown {
+display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 1rem;
+}
+.dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  /* Change color of dropdown links on hover */
+.dropdown a:hover {background-color: #ddd;
+    font-size: 0.9rem;}
+
+/* Show the dropdown menu on hover */
+.Area:hover .dropdown {display: block;
+font-size: 0.8rem;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.Area:hover .dropdown {background-color: #f1f1f1;}
+
+#X {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    z-index: 5;
+}
+#Xh1 {
+    font-size: 1.5rem;
+    color: #E5E5E5;
+}
+#X:hover {
     animation: fadeIn 0.5s;
-    border: 5px solid black;
 }
-.galleryImg2 {
-    margin-left: 2rem;
-    height: 18rem;
-    width: 25rem;
-    position: relative;
-    right: -1rem;
+#Xh1:hover {
+    color: #D5D5D5;
     animation: fadeIn 0.5s;
-    border: 5px solid black;
 }
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -112,44 +213,45 @@ input {
   #map #infowindow-content {
     display: inline;
   }
+  .galleryImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    order: 0;
+    z-index: 4;
+    animation: fadeIn 0.5s;
+}
+#gallery {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    z-index: 4;
+    height: 30%;
+    width: 23%;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
+    animation: fadeIn 0.5s;
+}
   #placeDetails {
     display: flex;
-    padding-top: 2rem;
-    background-image: linear-gradient(#9CC0F9 1%, 5%,#9CC0F0 7%,15%, #F3F3F3 90%);
-    height: 80vh;
+    flex-direction: column;
+    animation: fadeIn 0.5s;
   }
   #placeInfo {
-    margin-left: 2rem;
-    margin-right: 2rem;
-    margin-bottom: 4rem;
-    width: 900px;
-    height: 200px;
     position: absolute;
+    width: 23%;
+    padding: 1rem;
+    top: 30%;
     right: 0;
-    justify-content: flex-end;
-    align-items: flex-end;
+    background-color: whitesmoke;
+    z-index: 4;
+    animation: fadeIn 0.5s;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
   }
-  /*for mobile*/
-  @media (max-width: 1850px) {
-    #placeDetails {
-        position: relative;
-    }
-    #placeInfo {
-        font-size: 0.9rem;
-        float: left;
-        position: absolute;
-        width: 95%;
-        background-color: #F3F3F3;
-        height: fit-content;
-        padding: 2px 2px 2px 2px;
-    }
-    #gallery {
-        opacity: 0.5;
-        display: grid;
-        grid-template-columns: fit-content;
-    }
-    .galleryImg2 {
-        margin-top: 1rem;
-    }
+  .reviews {
+    font-size: 0.86rem;
   }
+
   

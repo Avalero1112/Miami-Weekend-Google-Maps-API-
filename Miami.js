@@ -5,7 +5,7 @@ function initMap() {
     const directionsRenderer = new google.maps.DirectionsRenderer();
     //map options
     var options= {
-        zoom: 10,
+        zoom: 12,
         center: {lat:25.7617, lng:-80.1918},
         mapId: google.maps.MapTypeId.ROADMAP
     }
@@ -28,15 +28,25 @@ function initMap() {
     let userLat;
     let userLng;
     let userCoords = [];
+    let cheapPlaces = [];
+    let allPlaces = [];
+
 
     var placeDetails = document.getElementById('placeDetails');
     placeDetails.style.display = 'none';
+
+    console.log("hi there");
 
     function createMarker (props) {
          var marker = new google.maps.Marker({
             position: props.coords,
             type: props.type,
         })
+
+        const allLats = props.coords.lat;
+        const allLngs = props.coords.lng
+
+
 
         marker.setMap(map);
 
@@ -46,9 +56,9 @@ function initMap() {
             barArr.push(marker);
         } else if (marker.type === 'Resturant') {
             resturantArr.push(marker);
-        }    
+        }
         
-
+      
         const infowindowContent = document.getElementById("infowindow-content");
 
         if (props.content) {
@@ -70,7 +80,6 @@ function initMap() {
         if (results[1]) {
         var placeID = results[1].formatted_address;
         destination.value = results[1].formatted_address;
-        console.log(placeID);
         const request = {
             placeId:props.placeID,
             fields: ['name','formatted_address','opening_hours',
@@ -83,45 +92,100 @@ function initMap() {
         service.getDetails(request, function(place, status) {
 
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+        
+        var starRating;
+        if (place.rating >= 3.8 && place.rating <= 4.2) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>`;
+        } else if (place.rating <= 4.7 && place.rating >= 4.3) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star-half"></i>`;
+        } else if (place.rating >= 3.3 && place.rating <= 3.7) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star-half"></i>`;
+        } else if (place.rating >= 2.8 && place.rating <= 3.2) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>`;
+        } else if (place.rating >= 2.3 && place.rating <= 2.7) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star-half"></i>`;
+        } else if (place.rating >= 1.8 && place.rating <= 2.2) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star"></i>`;
+        } else if (place.rating >= 1.3 && place.rating <= 1.7) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>
+            <i class="fa fa-solid fa-star-half"></i>`;
+        } else if (place.rating >= 0.8 && place.rating <= 1.2) {
+            starRating = 
+            `<i class="fa fa-solid fa-star"></i>`;
+        } else if (place.rating >= 0.3 && place.rating <= 0.7) {
+            starRating = 
+            `<i class="fa fa-solid fa-star-half"></i>`;
+        } else if (place.rating < 0.3) {
+            starRating =
+            `<i class="fa fa-solid fa-thumbs-down"></i>`;
+        } else {
+            starRating =
+            `<i class="far fa-regular fa-star"></i>
+            <i class="far fa-regular fa-star"></i>
+            <i class="far fa-regular fa-star"></i>
+            <i class="far fa-regular fa-star"></i>
+            <i class="far fa-regular fa-star"></i>`;
+        }
 
         var priceLevel;
         if (place.price_level === 1) {
-            priceLevel = '<strong>Price:</strong> $';
+            priceLevel = '<i class="fa fa-solid fa-dollar-sign"></i>';
         } else if (place.price_level === 2) {
-            priceLevel = '<strong>Price:</strong> $$';
+            priceLevel = '<i class="fa fa-solid fa-dollar-sign"></i><i class="fa fa-solid fa-dollar-sign"></i>';
         } else if (place.price_level === 3) {
-            priceLevel = '<strong>Price:</strong> $$$';
+            priceLevel = '<i class="fa fa-solid fa-dollar-sign"></i><i class="fa fa-solid fa-dollar-sign"></i><i class="fa fa-solid fa-dollar-sign"></i>';
         } else if (place.price_level === 4) {
-            priceLevel = '<strong>Price:</strong> $$$$';
+            priceLevel = '<i class="fa fa-solid fa-dollar-sign"></i><i class="fa fa-solid fa-dollar-sign"></i><i class="fa fa-solid fa-dollar-sign"></i><i class="fa fa-solid fa-dollar-sign"></i>';
         } else {
             priceLevel = '';
         }
 
         infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address + '<br>' +
-        priceLevel + '<br>' + `<a href=${place.website}>${place.website}</a>` + '<br>' + 'Rating: ' + place.rating + '/5' + '</div>');
+        priceLevel + '<br>' + `<a href=${place.website}>${place.website}</a>` + '<br>' + starRating + '</div>');
         infoWindow.open(map, that);
 
         const placeInfo = document.getElementById('placeInfo');
-        placeInfo.innerHTML = '<div><strong><h1>' + place.name + '</h1></strong>' + '<br>' + '<strong>Rating: </strong>' + place.rating 
-        + '/5' + ' | ' + priceLevel + '<br>' + `<i>${place.formatted_address}</i>` + ' | ' + place.formatted_phone_number + '<hr>'
-        + `<strong>${place.opening_hours.weekday_text[4]}</strong>` + '<br>'
-        + `<strong>${place.opening_hours.weekday_text[5]}</strong>`  + '<br>'
-        + `<strong>${place.opening_hours.weekday_text[6]}</strong>` 
-        + '<hr>' + 
+        placeInfo.innerHTML = '<div><strong><h1>' + place.name + '</h1></strong>' + '<br>'  + starRating +`  `+ place.rating
+         + ' | ' + priceLevel + '<br>' + `<i>${place.formatted_address}</i>` + ' | ' + place.formatted_phone_number + '<hr>'
+        + `<i>${place.opening_hours.weekday_text[4]}</i>` + '<br>'
+        + `<i>${place.opening_hours.weekday_text[5]}</i>`  + '<br>'
+        + `<i>${place.opening_hours.weekday_text[6]}</i>` 
+        + '<hr>' + `<div class="reviews">` + 
         place.reviews[0].text + '         -' + ' ' + place.reviews[0].author_name + `         | <strong>Rating: ${place.reviews[0].rating}/5
         </strong>`+ '<br>'+'<br>' + 
         place.reviews[1].text + '         -' + ' ' + place.reviews[1].author_name + `         | <strong>Rating: ${place.reviews[1].rating}/5
         </strong>` + '<br>'+'<br>' +
         place.reviews[2].text + '         -' + ' ' + place.reviews[2].author_name + `         | <strong>Rating: ${place.reviews[2].rating}/5
-        </strong>` + '<br>' + '<br>' + '</div>'
+        </strong>` + '<br>' + '<br>' + `</div>` + '</div>'
 
         const gallery = document.getElementById("gallery");
             const str = place.name;
             const str2 = str.replace(/<[^>]*>?/gm, '');
             infoWindow.open(map, marker);
 
-            const img1 = document.createElement("img");
-            const img2 = document.createElement("img");
+            const img = document.createElement("img");
             const placeNames = document.getElementById("place");
             placeNames.innerHTML = place.name;
 
@@ -130,24 +194,21 @@ function initMap() {
 
             if (venues.includes(str2)) {
             
-                img1.src = `${str2}1.jpg`;
-                img2.src = `${str2}2.jpg`;
+                img.src = `${str2}1.jpg`;
 
-            gallery.appendChild(img1);
-            gallery.appendChild(img2);
+            gallery.appendChild(img);
         
-            img1.classList.add("galleryImg");
-            img2.classList.add("galleryImg2");
+            img.classList.add("galleryImg");
 
            
 
-            if (gallery.childNodes.length > 4) {
+            if (gallery.childNodes.length > 2) {
 
             const prevVenue1 = gallery.firstElementChild;
-            const prevVenue2 = gallery.firstElementChild.nextElementSibling;
+            //const prevVenue2 = gallery.firstElementChild.nextElementSibling;
 
             gallery.removeChild(prevVenue1);
-            gallery.removeChild(prevVenue2);
+            //gallery.removeChild(prevVenue2);
             }
 
             }
@@ -157,8 +218,17 @@ function initMap() {
         } 
         })
         placeDetails.style.display = 'flex';
+        const exitBtn = document.getElementById('X');
 
-        })
+        exitBtn.addEventListener("click", function () {
+            placeDetails.style.display = 'none';
+        }, {passive: true});
+
+        map.addListener("click", function () {
+            placeDetails.style.display = 'none';
+        }, {passive: true});
+
+        }, {passive: true})
     }
     
 
@@ -244,7 +314,7 @@ function initMap() {
             directionsRenderer.setDirections(result);
           }
         });
-      }
+      }    
 
 
 
@@ -328,39 +398,10 @@ function toggleResturants (value) {
     //loop through and add resturant markers
     for (let i = 0; i < resturantsInfo.length; i++) {
     createMarker(resturantsInfo[i]);
-    }
-    //shows only resturants
-    filters.lastElementChild.addEventListener("click", function () {
-
-        filters.lastElementChild.classList.toggle("selected");
-
-        if (filters.lastElementChild.classList.contains("selected")) {
-
-        toggleClubs(null);
-        toggleBars(null);
-        } else {
-            toggleClubs(map);
-            toggleBars(map);
-        }
-    })
-    //loop through and add bar markers
-    for (let i = 0; i < barsInfo.length; i++) {
-   createMarker(barsInfo[i]);
-    }
-    //shows only bars
-    filters.firstElementChild.nextElementSibling.addEventListener("click", function () {
-
-        filters.firstElementChild.nextElementSibling.classList.toggle("selected");
-
-        if (filters.firstElementChild.nextElementSibling.classList.contains("selected")) {
-        toggleClubs(null);
-        toggleResturants(null);
-        } else {
-        toggleClubs(map);
-        toggleResturants(map);
-        }
-    })
 }
+
+}
+
 
 
 

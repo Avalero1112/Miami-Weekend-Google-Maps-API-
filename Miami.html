@@ -4,47 +4,65 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/b3a13ef491.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
     <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap'); </style>
     <link rel="stylesheet" href="Miami.css">
     <title>Document</title>
 </head>
 <body>
-    <div id="title"></div>
-    <h1>Things to do in </h1>
-    <h1 id="place"> Miami</h1>
-    <h1 id="blinker">|</h1>
-
     <div id="map">
         
     </div>
 
 <div id="textFieldsFilters">
-    <input type="text" placeholder="Type your location" id="autocomplete">
-    <button id="submit">Submit</button>
-<br>
-    <input type="text" placeholder="Click a red marker" id="destination">
-    <button id="routeButton">Route</button>
+    <div id="title">
+        <h1 class="h1">Things to do in</h1> <br>
+        <h1 id="place">Miami</h1>
+        <h1 id="blinker">|</h1>
+        <i class="fa fa-solid fa-wine-glass"></i> &nbsp;
+        <i class="fa fa-solid fa-utensils"></i> &nbsp;
+        <i class="fa fa-solid fa-compact-disc"></i> &nbsp;
+    </div>
+
+    <div id="userLocation">
+        <input type="text" placeholder="Address" id="autocomplete">
+        <button id="submit">Submit</button>
+        </div>
+    
+        <div id="userDestination">
+        <input type="text" placeholder="Click a red marker" id="destination">
+        <button id="routeButton">Route</button>
+        </div>
 
     <div id="filters">
         <ul id="filtersList">
-            <li><button>NightClubs</button></li>
-            <li><button>Bars</button></li>
-            <li><button>Local Resturants</button></li>
+            <li><button class="b">NightClubs <i class="fa fa-solid fa-compact-disc"></i></button></li>
+            <li><button class="b">Bars <i class="fa fa-solid fa-wine-glass"></i></button></li>
+            <li><button class="b">Resturants <i class="fa fa-solid fa-utensils"></i></button><br></li>
+            <li><button class="b">Low Cost <i class="fa fa-solid fa-dollar-sign"></i></button></li>
+            <li><button class="b">Highly Rated <i class="fa fa-solid fa-star"></i></button></li>
+            <li class="Area"><button class="b">Area <i class="fa fa-solid fa-location-arrow"></i></button>
+            <div class="dropdown">
+                <a href="">Brickell <input type="checkbox" class="checkbox"></a>
+                <a href="">Wynwood <input type="checkbox" class="checkbox"></a>
+                <a href="">Miami Beach <input type="checkbox" class="checkbox"></a>
+                <a href="">Coconut Grove <input type="checkbox" class="checkbox"></a>
+                <a href="">Coral Gables <input type="checkbox" class="checkbox"></a>
+            </div>
+            </li>
         </ul>
     </div>
+    
 </div>
 
 
-    <div id="placeDetails">
-    <div id="gallery">
 
-    </div>
-
-
-    <div id="placeInfo">
-
-    </div>
+<div id="placeDetails">
+    <div><button id="X"><h1 id="Xh1">X</h1></button></div>
+    
+        <div id="gallery"></div> 
+        <div id="placeInfo"></div>    
 </div>
 
     <script async defer

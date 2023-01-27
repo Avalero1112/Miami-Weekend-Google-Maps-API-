@@ -28,24 +28,18 @@ function initMap() {
     let userLat;
     let userLng;
     let userCoords = [];
-    let cheapPlaces = [];
+    let Expensive = [];
     let allPlaces = [];
 
 
     var placeDetails = document.getElementById('placeDetails');
     placeDetails.style.display = 'none';
 
-    console.log("hi there");
-
     function createMarker (props) {
          var marker = new google.maps.Marker({
             position: props.coords,
             type: props.type,
         })
-
-        const allLats = props.coords.lat;
-        const allLngs = props.coords.lng
-
 
 
         marker.setMap(map);
@@ -57,18 +51,16 @@ function initMap() {
         } else if (marker.type === 'Resturant') {
             resturantArr.push(marker);
         }
-        
+
       
         const infowindowContent = document.getElementById("infowindow-content");
 
         if (props.content) {
             var infoWindow = new google.maps.InfoWindow({
-                //content:props.content
-
             });
-            //var infoDiv = document.createElement("div");
-            //infoDiv.innerHTML = infoWindow;
         }
+
+        //BREAK DOWN LOGIC FOR PRICES
 
         marker.addListener("click", function() {
 
@@ -230,6 +222,7 @@ function initMap() {
 
         }, {passive: true})
     }
+
     
 
     let geocoder = new google.maps.Geocoder();
@@ -314,91 +307,141 @@ function initMap() {
             directionsRenderer.setDirections(result);
           }
         });
-      }    
+      }
+      
+      var clubsInfo = [
+        //BRICKELL VENUES 
+        {type: "club", coords: {lat:25.766717, lng:-80.195185},                content:`<h4>Blackbird</h4>`, placeID: `ChIJsRbg74S22YgRi0Phf5bJduk`, price: 2}, 
+        {type: "club", coords:{lat:25.772362, lng:-80.199755},                 content:`<h4>The Wharf</h4>`, placeID:`ChIJl41ZjJC22YgRqNY20-g5Dgk`, price: 2},
+        {type: "club", coords:{lat:25.784673, lng:-80.193202}, content:`<p>SPACE</p>`, placeID:`ChIJK69z3qO22YgROBJC2vDIXAI` , price: 3},
+        //WYNWOOD VENUES
+        {type: "club", coords:{lat:25.799734, lng:-80.197861},content:`<p>Racket</p>`, placeID: `ChIJ5YI87a222YgRNNZQBDWpROk`, price: 2},
+        {type: "club", coords:{lat:25.799685,lng:-80.197946}, content:`<p>Pilo's Tequila Garden</p>`, placeID: `ChIJYwDpeEK32YgRqSThB9zzIcM`, price: 1},
+        {type: "club", coords:{lat:25.800163,lng:-80.198137}, content:`<p>The Dirty Rabbit</p>`, placeID: `ChIJVVUljK222YgRfk4WrTxfZgM`, price: 2},
+        {type: "club", coords:{lat:25.79964, lng:-80.201466},                content:`<p>SHOTS Miami</p>`, placeID: `ChIJSQFrM7K22YgRNk_y_nLOWjA`, price: 2},
+        {type: "club", coords:{lat:25.799621,lng:-80.201077}, content:`<p>Booze Garden</p>`, placeID: `ChIJC1lRwAi32YgRSVrpQlyMnpA` , price: 'NA'},
+        //MIAMI BEACH VENUES
+        {type: "club", coords:{lat:25.817837,lng:-80.122712},  content:`<p>LIV</p>`, placeID: `ChIJoWHkOGqz2YgRFI7KBOyVT80`, price: 4},
+        {type: "club", coords:{lat:25.788689, lng:-80.141624},content:`<p>Bodega Taqueria y tequila (South Beach)</p>`, placeID: `ChIJ812ECoi02YgRNjj8YJ8We_c`, price: 2},
+        {type: "club", coords:{lat:25.770553,lng:-80.134042}, content:`<p>STORY</p>`, placeID: `ChIJQRnDgPG02YgR3phRlM77m0U`, price: 3},
+        {type: "club", coords:{lat:25.789319,lng:-80.132295}, content:`<p>Do Not Sit On The Furniture</p>`, placeID: `ChIJs2kjEG-ZEhQRB-lCHptoMwY`, price: 2},
+        {type: "club", coords:{lat:25.79912, lng:-80.129439},content:`<p>Treehouse</p>`, placeID: `ChIJVeGMe5202YgRsKp9L9sZ_Tk`, price: 'NA'},
+        {type: "club", coords:{lat:25.798885,lng:-80.128813}, content:`<p>23 Club</p>`, placeID: `ChIJMwK3zwe12YgRZ2t9YLdYGLc`, price: 'NA'},
+        {type: "club", coords:{lat:25.779744,lng:-80.130985}, content:`<p>VooDoo</p>`, placeID: `ChIJCYXEZJK02YgRjfXK2PimCj4`, price: 2},
+        //COCONUT GROVE VENUES 
+        {type: "club", coords:{lat:25.727539, lng:-80.242675}, content:`<p>Bodega Taqueria y tequila (Coconut Grove)</p>`, placeID: `ChIJRSnlieu32YgReeUjNmiGMwY`, price: 'NA'},
+    ];
+    
+    var resturantsInfo = [
+        {type: "Resturant", coords:{lat:25.765616, lng:-80.190062}, content:`<p>Komodo</p>`, placeID: `ChIJd6C8AYO22YgRYuO-L2IUdDQ`, price: 4},
+        {type: "Resturant", coords:{lat:25.767947 ,lng:-80.196276}, content:`<p>American Social</p>`, placeID: `ChIJ8XrxI4W22YgRyZiuIp0HdhQ`, price: 2},
+        {type: "Resturant", coords:{lat:25.79647,lng:-80.198694},   content: `<p>House of Mac</p>`, placeID: `ChIJZYnZCrS22YgRyDDD0Kg7d4I`, price: 2},
+        {type: "Resturant", coords:{lat:25.766205,lng:-80.192791},  content: `<p>Gekko</p>`, placeID: `ChIJv5H-Hx632YgRm-dxQpAYNeg`, price: 4}
+    ];
+    
+    var barsInfo = [
+        {type: "Bar", coords:{lat:25.766851, lng:-80.196131}, content:`<p>Rosa Sky</p>`, placeID: `ChIJpwznMWi32YgRs_iFE7Vok3Y`, price: 'NA'},
+        {type: "Bar", coords:{lat:25.764321, lng:-80.194223}, content:`<p>RedBar</p>`, placeID:`ChIJlwXLFIS22YgRn-dgC8QC2us`, price: 2},
+        {type: "Bar", coords:{lat:25.763323, lng:-80.194593}, content:`<p>Sweet Karoline Kareoke Bar</p>`, placeID: `ChIJQyFB81W32YgRckbC3DMrIzc`, price: 2},
+        {type: "Bar", coords:{lat:25.768441,lng:-80.191166},  content:`<p>Better Days</p>`, placeID: `ChIJ0-RuM4O22YgRHcs-acMSQaQ`, price: 2},
+    ];
 
-
-
-
-var clubsInfo = [
-    //BRICKELL VENUES 
-    {type: "club", coords: {lat:25.766717, lng:-80.195185},                content:`<h4>Blackbird</h4>`, placeID: `ChIJsRbg74S22YgRi0Phf5bJduk`, }, 
-    {type: "club", coords:{lat:25.772362, lng:-80.199755},                 content:`<h4>The Wharf</h4>`, placeID:`ChIJl41ZjJC22YgRqNY20-g5Dgk`},
-    {type: "club", coords:{lat:25.784673, lng:-80.193202}, content:`<p>SPACE</p>`, placeID:`ChIJK69z3qO22YgROBJC2vDIXAI`},
-    //WYNWOOD VENUES
-    {type: "club", coords:{lat:25.799734, lng:-80.197861},content:`<p>Racket</p>`, placeID: `ChIJ5YI87a222YgRNNZQBDWpROk`},
-    {type: "club", coords:{lat:25.799685,lng:-80.197946}, content:`<p>Pilo's Tequila Garden</p>`, placeID: `ChIJYwDpeEK32YgRqSThB9zzIcM`},
-    {type: "club", coords:{lat:25.800163,lng:-80.198137}, content:`<p>The Dirty Rabbit</p>`, placeID: `ChIJVVUljK222YgRfk4WrTxfZgM`},
-    {type: "club", coords:{lat:25.79964, lng:-80.201466},                content:`<p>SHOTS Miami</p>`, placeID: `ChIJSQFrM7K22YgRNk_y_nLOWjA`},
-    {type: "club", coords:{lat:25.799621,lng:-80.201077}, content:`<p>Booze Garden</p>`, placeID: `ChIJC1lRwAi32YgRSVrpQlyMnpA`},
-    //MIAMI BEACH VENUES
-    {type: "club", coords:{lat:25.817837,lng:-80.122712},  content:`<p>LIV</p>`, placeID: `ChIJoWHkOGqz2YgRFI7KBOyVT80`},
-    {type: "club", coords:{lat:25.788689, lng:-80.141624},content:`<p>Bodega Taqueria y tequila (South Beach)</p>`, placeID: `ChIJ812ECoi02YgRNjj8YJ8We_c`},
-    {type: "club", coords:{lat:25.770553,lng:-80.134042}, content:`<p>STORY</p>`, placeID: `ChIJQRnDgPG02YgR3phRlM77m0U`},
-    {type: "club", coords:{lat:25.789319,lng:-80.132295}, content:`<p>Do Not Sit On The Furniture</p>`, placeID: `ChIJs2kjEG-ZEhQRB-lCHptoMwY`},
-    {type: "club", coords:{lat:25.79912, lng:-80.129439},content:`<p>Treehouse</p>`, placeID: `ChIJVeGMe5202YgRsKp9L9sZ_Tk`},
-    {type: "club", coords:{lat:25.798885,lng:-80.128813}, content:`<p>23 Club</p>`, placeID: `ChIJMwK3zwe12YgRZ2t9YLdYGLc`},
-    {type: "club", coords:{lat:25.779744,lng:-80.130985}, content:`<p>VooDoo</p>`, placeID: `ChIJCYXEZJK02YgRjfXK2PimCj4`},
-    //COCONUT GROVE VENUES 
-    {type: "club", coords:{lat:25.727539, lng:-80.242675}, content:`<p>Bodega Taqueria y tequila (Coconut Grove)</p>`, placeID: `ChIJRSnlieu32YgReeUjNmiGMwY`},
-];
-
-var resturantsInfo = [
-    {type: "Resturant", coords:{lat:25.765616, lng:-80.190062}, content:`<p>Komodo</p>`, placeID: `ChIJd6C8AYO22YgRYuO-L2IUdDQ`},
-    {type: "Resturant", coords:{lat:25.767947 ,lng:-80.196276}, content:`<p>American Social</p>`, placeID: `ChIJ8XrxI4W22YgRyZiuIp0HdhQ`},
-    {type: "Resturant", coords:{lat:25.79647,lng:-80.198694},   content: `<p>House of Mac</p>`, placeID: `ChIJZYnZCrS22YgRyDDD0Kg7d4I`},
-    {type: "Resturant", coords:{lat:25.766205,lng:-80.192791},  content: `<p>Gekko</p>`, placeID: `ChIJv5H-Hx632YgRm-dxQpAYNeg`}
-];
-
-var barsInfo = [
-    {type: "Bar", coords:{lat:25.766851, lng:-80.196131}, content:`<p>Rosa Sky</p>`, placeID: `ChIJpwznMWi32YgRs_iFE7Vok3Y`},
-    {type: "Bar", coords:{lat:25.764321, lng:-80.194223}, content:`<p>RedBar</p>`, placeID:`ChIJlwXLFIS22YgRn-dgC8QC2us`},
-    {type: "Bar", coords:{lat:25.763323, lng:-80.194593}, content:`<p>Sweet Karoline Kareoke Bar</p>`, placeID: `ChIJQyFB81W32YgRckbC3DMrIzc`},
-    {type: "Bar", coords:{lat:25.768441,lng:-80.191166},  content:`<p>Better Days</p>`, placeID: `ChIJ0-RuM4O22YgRHcs-acMSQaQ`},
-];
-
-const filters = document.getElementById("filtersList");
-console.log(filters.lastElementChild.textContent);
-
-function toggleClubs (value) {
+    //CREATE CLUBS
     for (let i = 0; i < clubsInfo.length; i++) {
-        clubArr[i].setMap(value);
-    }
-}
-function toggleBars (value) {
-    for (let i = 0; i < barsInfo.length; i++) {
-        barArr[i].setMap(value);
-    }
-}
-function toggleResturants (value) {
-    for (let i = 0; i < resturantsInfo.length; i++) {
-        resturantArr[i].setMap(value);
-    }
-}
+        createMarker(clubsInfo[i]);
+            }
+        //CREATE BARS
+        for (let i = 0; i < barsInfo.length; i++) {
+        createMarker(barsInfo[i]);
+            }
+        //CREATE RESTURANTS
+        for (let i = 0; i < resturantsInfo.length; i++) {
+            createMarker(resturantsInfo[i]);
+            }
 
-    //loop through and add nightclub markers
-    for (let i = 0; i < clubsInfo.length; i++) {
-    createMarker(clubsInfo[i]);
-    }
-    //shows only clubs
-    filters.firstElementChild.addEventListener("click", function () {
-           
-        filters.firstElementChild.classList.toggle("selected");
-
-        if (filters.firstElementChild.classList.contains("selected")) {
-        toggleBars(null);
-        toggleResturants(null);
-        } else {
-            toggleBars(map)
-            toggleResturants(map)
-        }
-
-     })
-
-
-    //loop through and add resturant markers
-    for (let i = 0; i < resturantsInfo.length; i++) {
-    createMarker(resturantsInfo[i]);
-}
+            const filters = document.getElementById("filtersList");
+        
+            function toggleClubs (value) {
+                for (let i = 0; i < clubsInfo.length; i++) {
+                    clubArr[i].setMap(value);
+                }
+            }
+            function toggleBars (value) {
+                for (let i = 0; i < barsInfo.length; i++) {
+                    barArr[i].setMap(value);
+                }
+            }
+            function toggleResturants (value) {
+                for (let i = 0; i < resturantsInfo.length; i++) {
+                    resturantArr[i].setMap(value);
+                }
+            }
+            function toggleExpensive (value) {
+                if (props.price > 2) {
+                    marker.setMap(value);
+                }
+            }
+            
+ function showVenueType () {
+     filters.addEventListener("click", (e) => {
+          const text = e.target.textContent;
+          const btn = e.target;
+          const CL = btn.classList;
+          const selected = CL.contains('selected');
+            
+                    if (text === 'NightClubs' || 'Bars' || 'Resturants' || 'Inexpensive' || 'Highly-Rated' || 'Best') {
+                    const venueTypes = {
+                        NightClubs: () => {
+                            CL.toggle("selected");
+                            if (text === 'NightClubs' && selected) { 
+                                    toggleBars(null);
+                                    toggleResturants(null);
+                                    } else {
+                                        toggleBars(map)
+                                        toggleResturants(map)
+                                    }
+                                },
+                        Bars: () => {
+                            CL.toggle("selected");
+                            if (text === 'Bars' && selected) {  
+                                    toggleClubs(null);
+                                    toggleResturants(null);
+                                    } else {
+                                        toggleClubs(map)
+                                        toggleResturants(map)
+                                    }
+                            },
+                        Resturants: () => {
+                            CL.toggle("selected");
+                            if (text === 'Resturants' && selected) {  
+                                    toggleClubs(null);
+                                    toggleBars(null);
+                                    } else {
+                                        toggleClubs(map)
+                                        toggleBars(map)
+                                    }
+                            },
+                        Inexpensive: () => {
+                            CL.toggle("selected");
+                            if (text === 'Inexpensive' && selected) {  
+                                    toggleExpensive(null);
+                                    } else {
+                                    toggleExpensive(map)
+                                    }
+                            
+                            },
+                        Best: () => {
+                            console.log("THERE!")
+                        }
+            
+                            }
+                            venueTypes[text]();
+                            }
+                    
+                })
+                }
+                showVenueType();
+    
 
 }
 
